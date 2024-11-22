@@ -8,7 +8,6 @@ const taskSchema = new mongoose.Schema({
   description: String,
   category: {
     type: String,
-    enum: ['Work', 'Personal', 'Urgent'],
   },
   priority: {
     type: String,
