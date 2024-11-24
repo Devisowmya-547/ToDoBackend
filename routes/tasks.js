@@ -3,9 +3,9 @@ const Task = require('../models/Task');
 const router = express.Router();
 
 // Get all tasks
-router.get('/', async (req, res) => {
+router.get('/:id', async (req, res) => {
   try {
-    const tasks = await Task.find();
+    const tasks = await Task.find({owner : req.params.id});
     res.json(tasks);
   } catch (err) {
     res.status(500).send('Server Error');
@@ -14,7 +14,7 @@ router.get('/', async (req, res) => {
 
 // Create a new task
 router.post('/', async (req, res) => {
-  const { title, description, category, priority, deadline } = req.body;
+  const { title, description, category, priority, deadline, owner } = req.body;
 
   try {
     const newTask = new Task({
@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
       category,
       priority,
       deadline,
+      owner,
     });
 
     await newTask.save();
@@ -41,8 +42,8 @@ router.patch('/:id', async (req, res) => {
     }
 
     task.isCompleted = !task.isCompleted;
-    await task.save();
-    res.json(task);
+    await task.save()
+    res.json(task)
   } catch (err) {
     res.status(500).send('Server Error');
   }

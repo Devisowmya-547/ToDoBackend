@@ -18,6 +18,9 @@ const taskSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  owner: {
+    type : String,
+  },
 });
 
 const Task = mongoose.model('Task', taskSchema);
